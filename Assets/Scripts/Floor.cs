@@ -22,12 +22,13 @@ public class Floor : MonoBehaviour {
 		if( enemyCount == 0 ) {
             Vector3 pos = FindChestInChildren();
             lg.EndLevel( pos );
-            enemyCount--;
+            enemyCount = -1;
         }
 
 	}
 
     void SpawnEnemies() {
+        enemyCount = 0;
         GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
 
         int j = 0;
@@ -66,8 +67,10 @@ public class Floor : MonoBehaviour {
             
             Transform child = this.transform.GetChild(i);
             
-            if (child.CompareTag("ChestSpawnPoint")) 
+            if (child.CompareTag("ChestSpawnPoint")) {
                 pos = child.transform.position;
+                chestFound = true;
+            }
             
         }
 

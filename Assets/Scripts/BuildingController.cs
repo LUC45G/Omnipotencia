@@ -5,31 +5,37 @@ using UnityEngine;
 public class BuildingController : MonoBehaviour {
 
     GameObject[] puertas;
-    int nivelActual;
+    Transform camara;
     GameObject jugador;
+    int nivelActual;
     bool checkDoors = false;
+    float height;
 
     void Awake() {
 
         puertas = GameObject.FindGameObjectsWithTag("Finish");
-        nivelActual = 0;
         jugador = GameObject.FindGameObjectWithTag("Player");
+        camara = GameObject.FindGameObjectWithTag("MainCamera").transform;
+        nivelActual = 0;
 
     }
 
 	// Use this for initialization
 	void Start () {
-		
+		puertas = GameObject.FindGameObjectsWithTag("Finish");
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		// esto lo hice para que llame cuando ya se genero todo el nivel, despues vere como hacerlo mas clean
-        if(!checkDoors) 
-            puertas = GameObject.FindGameObjectsWithTag("Finish");
+		
 	}
 
     public void SubirDeNivel() {
         jugador.transform.position = puertas[++nivelActual].transform.position;
+        camara.position = new Vector3( camara.position.x, camara.position.y + height, camara.position.z);
+    }
+
+    public void setHeight( float h ) {
+        height = h;
     }
 }

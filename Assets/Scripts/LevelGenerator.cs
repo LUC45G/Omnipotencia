@@ -29,6 +29,8 @@ public class LevelGenerator : MonoBehaviour {
 
         float posY = baseGO.transform.position.y;
         float height = baseGO.GetComponent<Collider2D>().bounds.size.y;
+        
+        gameObject.GetComponent<BuildingController>().setHeight(height);
 
         for (int i = 1; i<rng; i++) {
             int randomObject = r.Next(0, floors.Length);
