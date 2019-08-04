@@ -10,13 +10,13 @@ public class Enemy : MonoBehaviour {
     public double currentHealth;
     public float resistencia;
     public float damage;
-    private LevelGenerator level;
+    private Floor level;
 
 	void Awake () {
         currentHealth = 500;
         resistencia = 20;
         damage = 50;
-        level = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<LevelGenerator>();
+        level = GameObject.FindGameObjectWithTag("Piso").GetComponent<Floor>();
 	}   
 	
 	// Update is called once per frame

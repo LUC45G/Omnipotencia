@@ -7,31 +7,28 @@ using UnityEngine.SceneManagement;
 
 public class Jugador : MonoBehaviour {
 
-    public float velocidad_movimiento;
-    public float fuerza_salto;
+    float velocidad_movimiento = 25;
+    float fuerza_salto = 75;
     public Slider slider_vida;
     public WeaponController weaponController;
+    private BuildingController bc;
 
 
     private Rigidbody2D rb;
     private bool estaSaltando, estaEscalando, estaEnEscalera;
     private float defaultGravityScale;
 
-    private Vector2 salto;
-
     // Atributos del personaje
     private int vida_maxima; public int vida_actual;
     private float resistencia, danio;
-
-    public GameObject TPOut;
 
     void Awake() {
         vida_maxima = 100;
         vida_actual = vida_maxima;
         slider_vida.value = vida_maxima;
         resistencia = 20f;
-        danio = 15.7f;        
-        salto = new Vector2(0.0f, 1.0f);
+        danio = 15.7f;
+        bc = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<BuildingController>();
     }
 
 	// Use this for initialization
@@ -75,23 +72,18 @@ public class Jugador : MonoBehaviour {
     void Jump() {
         // Si se aprieta espacio y está en el suelo, salta
         if(Input.GetKeyDown(KeyCode.J)) {
-            if( !estaSaltando ) {
+            if( !estaSaltando && !estaEnEscalera ) {
                 estaSaltando = true;
-                rb.AddForce(salto * fuerza_salto, ForceMode2D.Impulse);
+                rb.AddForce(Vector2.up * fuerza_salto, ForceMode2D.Impulse);
             }
         }
     }
 
     void Escalar() {
         transform.Translate (new Vector2(0, Input.GetAxis("Vertical")) * Time.deltaTime*velocidad_movimiento);
-        rb.gravityScale = 0;
     }
 
     void OnTriggerEnter2D(Collider2D col) {
-
-        if (col.CompareTag("TP")) {
-            this.transform.position = TPOut.transform.position;
-        }
 
         if(col.CompareTag("Object")) {
             String nombre_item = col.name.Remove(col.name.Length - 7);
@@ -102,11 +94,18 @@ public class Jugador : MonoBehaviour {
         }
 
         if (col.CompareTag("exitPoint")) {
-            SceneManager.LoadScene(0);
+            bc.SubirDeNivel();
         }
 
-        if ( col.CompareTag("Ladder") ) 
+        if ( col.CompareTag("Ladder") ) {
             estaEnEscalera = true;
+            rb.gravityScale = 0;
+            if (estaSaltando) {
+                rb.velocity = Vector3.zero;
+                rb.angularVelocity = 0f;
+            }
+                
+        }
     }
 
     void OnTriggerStay2D ( Collider2D col ) {

@@ -5,33 +5,22 @@ using UnityEngine;
 public class LevelGenerator : MonoBehaviour {
 
     public GameObject[] floors;
-    public GameObject[] enemies;
     public GameObject baseGO;
     public GameObject exitPoint;
     public GameObject chest;
 
-
-    private int enemyCount;
-
-
-
     void Awake() {
-        enemyCount = 0;
+
     }
 	// Use this for initialization
 	void Start () {
-		//SpawnFloors();
-
-        SpawnEnemies();
+		SpawnFloors();
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		
-        if(enemyCount == 0) 
-            EndLevel();
-        
-	}
+    void Update () {
+
+    }
 
     void SpawnFloors() {
         System.Random r = new System.Random();
@@ -43,36 +32,14 @@ public class LevelGenerator : MonoBehaviour {
 
         for (int i = 1; i<rng; i++) {
             int randomObject = r.Next(0, floors.Length);
-            Instantiate( floors[randomObject], new Vector3( floors[randomObject].transform.position.x, posY + (height * i) , floors[randomObject].transform.position.z ), Quaternion.identity );
+            Transform t = floors[randomObject].transform;
+            Instantiate( floors[randomObject], new Vector3( t.position.x, t.position.y + (height * i) , t.position.z ), Quaternion.identity );
         }
     }
 
-    void SpawnEnemies() {
-        GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
-        System.Random rand = new System.Random();
-
-        for(int i = 0; i < spawnPoints.Length; i++) {
-            int val = rand.Next(0, 2);
-
-            if(val == 1) {
-                int enemy = rand.Next(0, enemies.Length);
-                Vector3 pos = spawnPoints[i].transform.position;
-                Instantiate(enemies[enemy], pos, Quaternion.identity);
-
-                enemyCount++;
-            }
-
-        }
-    }
-
-    public void KillEnemy() {
-        enemyCount--;
-    }
-
-    void EndLevel() {
+    public void EndLevel(Vector3 pos) {
         GameObject finishPoint = GameObject.FindGameObjectWithTag("Finish");
         Instantiate(exitPoint, finishPoint.transform.position, Quaternion.identity);
-        Instantiate(chest, GameObject.FindGameObjectWithTag("ChestSpawnPoint").transform.position, Quaternion.identity);
-        enemyCount = -1;
+        Instantiate(chest, pos, Quaternion.identity);
     }
 }

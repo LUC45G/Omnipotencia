@@ -54,12 +54,12 @@ public class WeaponController : MonoBehaviour {
 
             instantiatedObj.transform.rotation = Quaternion.Euler( ( target.x*(target.x - 1) * 90) , 0, (aux_Y * ( (1 - target.x) * -90 )) + ( (1 - aux_Y) * ( target.y * 90 ) ) );
 
-            if(arma.tipo == 0) {
+            if(arma.tipo == 0) { // Si el arma es a rango
                 Rigidbody2D attack_rb = instantiatedObj.GetComponent<Rigidbody2D>();
                 attack_rb.AddForce(target * 100, ForceMode2D.Impulse);
                 Destroy(instantiatedObj, 1.0f);
             }
-            else {
+            else { // Si es melee
                 Destroy(instantiatedObj, 0.1f);
             }
             
