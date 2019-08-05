@@ -39,9 +39,9 @@ public class LevelGenerator : MonoBehaviour {
         }
     }
 
-    public void EndLevel(Vector3 pos) {
-        GameObject finishPoint = GameObject.FindGameObjectWithTag("Finish");
-        Instantiate(exitPoint, finishPoint.transform.position, Quaternion.identity);
-        Instantiate(chest, pos, Quaternion.identity);
+    public void EndLevel(Vector3 chestPosition, Vector3 doorPosition) {
+        
+        Instantiate(exitPoint, doorPosition, Quaternion.identity);
+        Instantiate(chest, chestPosition, Quaternion.identity);
     }
 }

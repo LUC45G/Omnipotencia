@@ -16,7 +16,6 @@ public class Enemy : MonoBehaviour {
         currentHealth = 500;
         resistencia = 20;
         damage = 50;
-        level = GameObject.FindGameObjectWithTag("Piso").GetComponent<Floor>();
 	}   
 	
 	// Update is called once per frame
@@ -34,5 +33,9 @@ public class Enemy : MonoBehaviour {
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
+    }
+
+    public void SetFloor(Floor f) {
+        level = f;
     }
 }

@@ -7,8 +7,9 @@ public class Floor : MonoBehaviour {
     public GameObject[] enemies;
     int enemyCount;
     LevelGenerator lg;
+
+    Vector3 chestPos = Vector3.zero, doorPos = Vector3.zero; 
     void Awake () {
-        enemyCount = 0 ;
         SpawnEnemies();
         lg = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<LevelGenerator>();
     }
@@ -20,8 +21,8 @@ public class Floor : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if( enemyCount == 0 ) {
-            Vector3 pos = FindChestInChildren();
-            lg.EndLevel( pos );
+            FindChestAndDoor();
+            lg.EndLevel( chestPos, doorPos );
             enemyCount = -1;
         }
 
@@ -47,7 +48,7 @@ public class Floor : MonoBehaviour {
             if(val == 1) {
                 int enemy = rand.Next(0, enemies.Length);
                 Vector3 pos = spawnPoints[i].transform.position;
-                Instantiate(enemies[enemy], pos, Quaternion.identity);
+                Instantiate(enemies[enemy], pos, Quaternion.identity).GetComponent<Enemy>().SetFloor(this);
 
                 enemyCount++;
             }
@@ -59,21 +60,27 @@ public class Floor : MonoBehaviour {
         enemyCount--;
     }
 
-    Vector3 FindChestInChildren() {
-        Vector3 pos = Vector3.zero;
+    void FindChestAndDoor() {
         bool chestFound = false;
+        bool doorFound = false;
+        bool finish = false;
 
-        for (int i = 0; i < this.transform.childCount && !chestFound; i++) {
+        for (int i = 0; i < this.transform.childCount && !finish; i++) {
             
             Transform child = this.transform.GetChild(i);
             
-            if (child.CompareTag("ChestSpawnPoint")) {
-                pos = child.transform.position;
+            if ( !chestFound && child.CompareTag("ChestSpawnPoint")) {
+                chestPos = child.transform.position;
                 chestFound = true;
             }
+
+            if( !doorFound && child.CompareTag("Finish")) {
+                doorPos = child.transform.position;
+                doorFound = true;
+            }
+
+            finish = chestFound && doorFound;
             
         }
-
-        return pos;
     }
 }

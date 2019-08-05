@@ -19,7 +19,7 @@ public class Jugador : MonoBehaviour {
     private float defaultGravityScale;
 
     // Atributos del personaje
-    private int vida_maxima; public int vida_actual;
+    private int vida_maxima, vida_actual;
     private float resistencia, danio;
 
     void Awake() {
@@ -123,14 +123,6 @@ public class Jugador : MonoBehaviour {
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
-        // Detecta que la colision haya sido al piso y no a una pared o techo
-        if ( collision.contacts.Length == 2 ) {
-            ContactPoint2D contact = collision.contacts[0];
-            if(Vector3.Dot(contact.normal, Vector3.up) > 0.5) {
-                // La colision fue desde abajo
-                estaSaltando = false; 
-            }
-        }
 
         // Si la colision fue contra un enemigo, reinicia el nivel
         if ( collision.gameObject.CompareTag("Enemy") ) {
@@ -150,9 +142,19 @@ public class Jugador : MonoBehaviour {
 
     }
 
+    void OnCollisionStay2D(Collision2D collision) {
+
+        
+        // Detecta que la colision haya sido al piso y no a una pared o techo
+        ContactPoint2D contact = collision.contacts[0];
+        if(Vector3.Dot(contact.normal, Vector3.up) > 0.5) {
+            // La colision fue desde abajo
+            estaSaltando = false; 
+        }
+    }
+
     void OnCollisionExit2D(Collision2D collision) {
-        if( !collision.gameObject.CompareTag("Floor") )
-            estaSaltando = true;
+        estaSaltando = true;
     }
 
     public void RecibirDamage(float enemyD) {
