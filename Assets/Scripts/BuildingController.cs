@@ -31,7 +31,8 @@ public class BuildingController : MonoBehaviour {
 	}
 
     public void SubirDeNivel() {
-        jugador.transform.position = puertas[++nivelActual].transform.position;
+        int i = ++nivelActual;
+        jugador.transform.position = new Vector3 (puertas[i].transform.position.x, puertas[i].transform.position.y, -25);
         camara.position = new Vector3( camara.position.x, camara.position.y + height, camara.position.z);
     }
 

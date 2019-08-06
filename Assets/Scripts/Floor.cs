@@ -30,18 +30,21 @@ public class Floor : MonoBehaviour {
 
     void SpawnEnemies() {
         enemyCount = 0;
-        GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
-
         int j = 0;
+        GameObject[] auxArray = new GameObject[100];
+
         for (int i = 0; i < this.transform.childCount; i++) {
             Transform child = this.transform.GetChild(i);
-            if (child.CompareTag("SpawnPoint")) {
-                spawnPoints[j++] = child.gameObject;
-            }
+            if (child.CompareTag("SpawnPoint"))
+                auxArray[j++] = child.gameObject;
         }
 
-        System.Random rand = new System.Random();
+        GameObject[] spawnPoints = new GameObject[j];
 
+        for(int i = 0; i < j; i++) 
+            spawnPoints[i] = auxArray[i];
+
+        System.Random rand = new System.Random();
         for(int i = 0; i < spawnPoints.Length; i++) {
             int val = rand.Next(0, 2);
 
