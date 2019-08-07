@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class WeaponController : MonoBehaviour {
 
-
-    private float fireRate = 0.3f;
     private float nextFire = 0.0f;
 
     private Arma arma;

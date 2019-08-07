@@ -28,25 +28,18 @@ public class PlayerMovement : MonoBehaviour {
         RaycastHit2D hitRight = Physics2D.Raycast( new Vector2(transform.position.x + media, transform.position.y), Vector2.down, float.Parse( (_collider.bounds.size.y/1.7).ToString() )   );
         RaycastHit2D hitLeft = Physics2D.Raycast( new Vector2(transform.position.x - media, transform.position.y), Vector2.down, float.Parse( (_collider.bounds.size.y/1.7).ToString() )   );
 
-        if (hitRight.collider != null || hitLeft.collider != null) { // true cuando esta tocando superficie
+        if (hitRight.collider != null || hitLeft.collider != null) // true cuando esta tocando superficie
             estaSaltando = false;
-             Debug.DrawRay(transform.position, hitRight.point, Color.green);
-             Debug.DrawRay(transform.position, hitLeft.point, Color.green);
-
-        }
-        else {
+        else 
             estaSaltando = true;
-             Debug.DrawRay(transform.position, new Vector3(transform.position.x + media, transform.position.y, 0) + transform.up * -float.Parse( (_collider.bounds.size.y/1.7).ToString() ), Color.red);
-             Debug.DrawRay(transform.position, new Vector3(transform.position.x - media, transform.position.y, 0) + transform.up * -float.Parse( (_collider.bounds.size.y/1.7).ToString() ), Color.red);
-        }
 
-        Physics2D.IgnoreLayerCollision(8, 9);
         
+        Physics2D.IgnoreLayerCollision(8, 9);
         Move();
         Jump();
-
         if ( estaEnEscalera )
             Escalar();
+
 	}
 
     void Move() {

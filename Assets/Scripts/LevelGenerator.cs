@@ -6,6 +6,7 @@ public class LevelGenerator : MonoBehaviour {
 
     public GameObject[] floors;
     public GameObject baseGO;
+    public GameObject endingFloor;
     public GameObject exitPoint;
     public GameObject chest;
 
@@ -26,8 +27,6 @@ public class LevelGenerator : MonoBehaviour {
         System.Random r = new System.Random();
         int rng = r.Next(1, 7);
         rng = rng + 2;
-
-        float posY = baseGO.transform.position.y;
         float height = baseGO.GetComponent<Collider2D>().bounds.size.y;
         
         gameObject.GetComponent<BuildingController>().setHeight(height);
@@ -37,6 +36,8 @@ public class LevelGenerator : MonoBehaviour {
             Transform t = floors[randomObject].transform;
             Instantiate( floors[randomObject], new Vector3( t.position.x, t.position.y + (height * i) , t.position.z ), Quaternion.identity );
         }
+
+        Instantiate( endingFloor, new Vector3( endingFloor.transform.position.x, endingFloor.transform.position.y + (height * rng) , endingFloor.transform.position.z ), Quaternion.identity );
     }
 
     public void EndLevel(Vector3 chestPosition, Vector3 doorPosition) {

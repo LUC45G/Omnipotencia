@@ -29,6 +29,7 @@ public class Jugador : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
         
 	}
 	
@@ -42,7 +43,9 @@ public class Jugador : MonoBehaviour {
         if(col.CompareTag("Object")) {
             String nombre_item = col.name.Remove(col.name.Length - 7);
             System.Type nombre = System.Type.GetType(nombre_item + ",Assembly-CSharp");
-            gameObject.AddComponent(nombre);
+
+            if(gameObject.GetComponent(nombre) == null)
+                gameObject.AddComponent(nombre);
 
             Destroy(col.gameObject);
         }
@@ -50,6 +53,9 @@ public class Jugador : MonoBehaviour {
         if (col.CompareTag("exitPoint")) {
             bc.SubirDeNivel();
         }
+
+        if ( col.CompareTag("EndBuilding") )
+            SceneManager.LoadScene(1);
 
     }
 

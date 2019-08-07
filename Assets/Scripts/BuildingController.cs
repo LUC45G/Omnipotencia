@@ -8,7 +8,6 @@ public class BuildingController : MonoBehaviour {
     Transform camara;
     GameObject jugador;
     int nivelActual;
-    bool checkDoors = false;
     float height;
 
     void Awake() {
