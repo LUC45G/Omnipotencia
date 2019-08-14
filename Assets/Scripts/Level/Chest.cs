@@ -6,6 +6,7 @@ public class Chest : MonoBehaviour {
 
     public Sprite openedChest;
     public GameObject item;
+    public GameObject [] itemPool;
     bool isOpened;
 
     void Awake() {
@@ -26,6 +27,11 @@ public class Chest : MonoBehaviour {
 
         if( !isOpened && col.CompareTag("Player") ) {
             
+            System.Random r = new System.Random();
+            int itemID = r.Next(0, itemPool.Length);
+            item = itemPool[itemID];
+
+
             isOpened = true;
             
             GetComponent<SpriteRenderer>().sprite = openedChest;

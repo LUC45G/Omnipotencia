@@ -25,7 +25,7 @@ public class LevelGenerator : MonoBehaviour {
 
     void SpawnFloors() {
         System.Random r = new System.Random();
-        int rng = r.Next(1, 7);
+        int rng = r.Next(10, 20);
         rng = rng + 2;
         float height = baseGO.GetComponent<Collider2D>().bounds.size.y;
         
@@ -41,8 +41,12 @@ public class LevelGenerator : MonoBehaviour {
     }
 
     public void EndLevel(Vector3 chestPosition, Vector3 doorPosition) {
-        
         Instantiate(exitPoint, doorPosition, Quaternion.identity);
-        Instantiate(chest, chestPosition, Quaternion.identity);
+        
+        System.Random r = new System.Random();
+        int random = r.Next(0, 101);
+        
+        //if(random % 3 == 0)
+            Instantiate(chest, chestPosition, Quaternion.identity);
     }
 }

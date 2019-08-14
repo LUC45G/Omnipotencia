@@ -35,7 +35,7 @@ public class Jugador : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		slider_vida.value = vida_actual;
     }
 
     void OnTriggerEnter2D(Collider2D col) {
@@ -93,4 +93,17 @@ public class Jugador : MonoBehaviour {
 
     }
 
+    public void AumentarVida(int plus) {
+        vida_maxima += plus;
+        vida_actual += plus;
+    }
+
+    public void AumentarDanio(float plus) {
+        danio += plus;
+    }
+
+
+    public void AumentarResistencia(float plus) {
+        resistencia += plus;
+    }
 }

@@ -6,14 +6,20 @@ public class Dash : MonoBehaviour {
 
 	private bool isDashing = false;
     private GameObject player;
+    public DummyTextsHolder textSpawner;
+    private int id;
     
 
     void Awake() {
         player = GameObject.FindGameObjectWithTag("Player");
+        id = 1;
+        textSpawner = GameObject.FindGameObjectWithTag("DummyTextsHolder").GetComponent<DummyTextsHolder>();
     }
     // Use this for initialization
 	void Start () {
 		Physics2D.queriesStartInColliders = false;
+        player.GetComponent<Jugador>().AumentarDanio(50);
+        textSpawner.ShowText(id);
 	}
 	
 	// Update is called once per frame
@@ -35,7 +41,7 @@ public class Dash : MonoBehaviour {
 	}
 
     void DashControl() {
-        if(Input.GetKeyDown(KeyCode.L)) {
+       if(Input.GetKeyDown(KeyCode.L)) {
             if( !isDashing ) {
                 isDashing = true;
                 float movPos = player.transform.position.x + 17;
@@ -50,5 +56,5 @@ public class Dash : MonoBehaviour {
             
             isDashing = false;
         }
-    }
+    } 
 }
