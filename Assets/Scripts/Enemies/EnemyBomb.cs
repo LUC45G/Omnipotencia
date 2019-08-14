@@ -26,10 +26,12 @@ public class EnemyBomb : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D col) {
         
-        if(col.gameObject.CompareTag("Player")) 
+        if(col.gameObject.CompareTag("Player")) {
             player.RecibirDamage( transform.parent.GetComponent<Enemy>().damage );
+            Destroy(gameObject);
+        }
         
-        //if(col.gameObject.CompareTag("Floor")) 
+        if(col.gameObject.CompareTag("Floor")) 
             Destroy(gameObject);
            //ExpansiveWave();
 

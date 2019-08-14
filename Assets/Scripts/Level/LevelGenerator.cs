@@ -15,7 +15,7 @@ public class LevelGenerator : MonoBehaviour {
     }
 	// Use this for initialization
 	void Start () {
-		SpawnFloors();
+		// SpawnFloors();
 	}
 	
 	// Update is called once per frame

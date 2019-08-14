@@ -10,10 +10,12 @@ public class FirstBoss : MonoBehaviour {
     public GameObject proyectil;
     public Transform player;
     public Transform attackSpawner;
+    private Rigidbody2D rb;
 
 
     void Awake() {
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        rb = this.GetComponent<Rigidbody2D>();
     }
 
 	// Use this for initialization
@@ -24,8 +26,16 @@ public class FirstBoss : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         Physics2D.IgnoreLayerCollision(10, 11);
-		// Attack();
+		Attack();
 	}
+
+    void OnCollisionEnter2D(Collision2D col) {
+
+        if(col.gameObject.CompareTag("Floor")) {
+            rb.AddForce(Vector2.up * 20, ForceMode2D.Impulse);
+
+        }
+    }
 
     void Attack() {
 
@@ -43,8 +53,12 @@ public class FirstBoss : MonoBehaviour {
             instantiatedObj.transform.parent = gameObject.transform;
             
             Rigidbody2D attack_rb = instantiatedObj.GetComponent<Rigidbody2D>();
-            attack_rb.AddForce(dir * 12, ForceMode2D.Impulse);
+            attack_rb.AddForce(dir * 32, ForceMode2D.Impulse);
             // Destroy(instantiatedObj, 1.0f);
         }
+    }
+
+    void Movement() {
+
     }
 }
