@@ -45,7 +45,7 @@ public class FirstBoss : MonoBehaviour {
             Vector2 dir = player.position - this.transform.position;
             
             dir.Normalize();
-            dir.y += 1;
+            dir.y += 0.5f;
 
 
             GameObject instantiatedObj = (GameObject) Instantiate(proyectil, attackSpawner.position, attackSpawner.rotation);
@@ -53,8 +53,8 @@ public class FirstBoss : MonoBehaviour {
             instantiatedObj.transform.parent = gameObject.transform;
             
             Rigidbody2D attack_rb = instantiatedObj.GetComponent<Rigidbody2D>();
-            attack_rb.AddForce(dir * 32, ForceMode2D.Impulse);
-            // Destroy(instantiatedObj, 1.0f);
+            attack_rb.AddForce(dir * 50, ForceMode2D.Impulse);
+            Destroy(instantiatedObj, 4.0f);
         }
     }
 

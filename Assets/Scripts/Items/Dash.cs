@@ -26,7 +26,7 @@ public class Dash : MonoBehaviour {
 	void Update () {
 		
         Vector2 looking = ( player.transform.rotation.y == 0 ) ? Vector2.right : Vector2.left;
-        RaycastHit2D ray = Physics2D.Raycast(transform.position, looking * 17, player.transform.position.x + 17);
+        RaycastHit2D ray = Physics2D.Raycast(transform.position, looking * 17, 17f);
 
         if( ray.collider == null ) {
             Debug.DrawRay(player.transform.position, looking * 17, Color.green);
