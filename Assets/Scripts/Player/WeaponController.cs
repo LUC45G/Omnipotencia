@@ -55,7 +55,7 @@ public class WeaponController : MonoBehaviour {
             if(arma.tipo == 0) { // Si el arma es a rango
                 Rigidbody2D attack_rb = instantiatedObj.GetComponent<Rigidbody2D>();
                 attack_rb.AddForce(target * 100, ForceMode2D.Impulse);
-                Destroy(instantiatedObj, 1.0f);
+                //Destroy(instantiatedObj);
             }
             else { // Si es melee
                 Destroy(instantiatedObj, 0.1f);
