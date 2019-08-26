@@ -5,6 +5,7 @@ using UnityEngine;
 public class Attack : MonoBehaviour {
 
     Jugador player;
+    public GameObject shoot;
 
     void Awake() {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Jugador>();
@@ -23,7 +24,7 @@ public class Attack : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D collision) {
 
         
-        if ( player.GetComponentInChildren<WeaponController>().getWeapon().tipo == 0 ) 
+        if ( player.GetComponentInChildren<RangeWeaponController>().getWeapon().tipo == 0 ) 
             Destroy(gameObject);
 
         if ( collision.gameObject.CompareTag("Enemy")) {
@@ -32,5 +33,9 @@ public class Attack : MonoBehaviour {
             enemy.RecibirDamage(player.CalcularDamage());
         }
         
+    }
+
+    public GameObject getShoot() {
+        return shoot;
     }
 }

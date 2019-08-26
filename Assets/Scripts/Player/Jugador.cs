@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class Jugador : MonoBehaviour {
 
     public Slider slider_vida;
-    public WeaponController weaponController;
+    public RangeWeaponController weaponController;
     private BuildingController bc;
 
 

@@ -10,7 +10,7 @@ public class Floor : MonoBehaviour {
 
     Vector3 chestPos = Vector3.zero, doorPos = Vector3.zero; 
     void Awake () {
-        SpawnEnemies();
+        // SpawnEnemies();
         lg = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<LevelGenerator>();
     }
 	// Use this for initialization

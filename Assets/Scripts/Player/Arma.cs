@@ -7,7 +7,7 @@ public class Arma : MonoBehaviour {
     public int tipo;
     public float danio;
     public float velocidad_de_ataque;
-    public GameObject ataque;
+    public List<Attack> ataque;
 
 
 	// Use this for initialization
@@ -22,5 +22,9 @@ public class Arma : MonoBehaviour {
     public void AumentarVelocidadDeAtaque(float plus) {
         // posiblemente esto deba ser un multiplicador pero bueno
         velocidad_de_ataque += plus;
+    }
+
+    public List<Attack> getAttacks() {
+        return ataque;
     }
 }
