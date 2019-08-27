@@ -35,12 +35,15 @@ public class PlayerMovement : MonoBehaviour {
 
         
         Physics2D.IgnoreLayerCollision(8, 9);
+        
+	}
+
+    void FixedUpdate() {
         Move();
         Jump();
         if ( estaEnEscalera )
             Escalar();
-
-	}
+    }
 
     void Move() {
         // Mueve al bicho atras o adelante

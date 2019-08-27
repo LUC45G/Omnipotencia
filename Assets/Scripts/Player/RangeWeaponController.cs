@@ -10,10 +10,12 @@ public class RangeWeaponController : MonoBehaviour {
     private Vector3 initialPosition;
     private Arma arma;
 
+    private Vector3 offset;
 
     void Awake() {
         arma = GetComponentInParent<Arma>();
         initialPosition = this.transform.position;
+        offset = this.transform.position - this.GetComponentInParent<Transform>().position;
     }
 
 	// Use this for initialization
@@ -22,7 +24,8 @@ public class RangeWeaponController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Attack();
+	    Translate();
+    	Attack();
 	}
 
     void Attack() {
@@ -32,7 +35,7 @@ public class RangeWeaponController : MonoBehaviour {
             // controla la velocidad de ataque. 
             nextFire = Time.time + arma.velocidad_de_ataque;
 
-            Translate();
+            
             Vector2 target = Vector2.zero;
 
 
@@ -64,11 +67,11 @@ public class RangeWeaponController : MonoBehaviour {
     void Translate() {
 
         if ( Input.GetAxis("Vertical") > 0 ) 
-            this.transform.position = this.GetComponentInParent<Transform>().position + Vector3.up;
+            this.transform.position = this.transform.parent.transform.position + Vector3.up;
         else if ( Input.GetAxis("Vertical") < 0 )
-            this.transform.position = this.GetComponentInParent<Transform>().position - Vector3.up;
+            this.transform.position = this.transform.parent.transform.position - Vector3.up;
         else
-            this.transform.position = initialPosition;
+            this.transform.position += offset;
         
 
     }

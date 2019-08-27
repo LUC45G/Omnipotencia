@@ -1,24 +1,52 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CompleteCameraController : MonoBehaviour {
-
-    public GameObject player;       //Public variable to store a reference to the player game object
-
-
-    private Vector3 offset;         //Private variable to store the offset distance between the player and camera
-
-    // Use this for initialization
-    void Start () 
-    {
-        //Calculate and store the offset value by getting the distance between the player's position and camera's position.
-        offset = transform.position - player.transform.position;
+    private struct PointInSpace {
+        public Vector3 Position ;
+        public float Time ;
     }
     
-    // LateUpdate is called after Update each frame
-    void LateUpdate () 
-    {
-        // Set the position of the camera's transform to be the same as the player's, but offset by the calculated offset distance.
-        transform.position = player.transform.position + offset;
+    [SerializeField]
+    [Tooltip("The transform to follow")]
+    private Transform target;
+    
+    [SerializeField]
+    [Tooltip("The offset between the target and the camera")]
+    private Vector3 offset;
+    
+    [Tooltip("The delay before the camera starts to follow the target")]
+    [SerializeField]
+    private float delay = 0.5f;
+    
+    [SerializeField]
+    [Tooltip("The speed used in the lerp function when the camera follows the target")]
+    private float speed = 5;
+
+    private Rigidbody2D rb;
+    
+    ///<summary>
+    /// Contains the positions of the target for the last X seconds
+    ///</summary>
+    private Queue<PointInSpace> pointsInSpace = new Queue<PointInSpace>();
+
+
+
+    void Start() {
+        offset = target.position - this.transform.position;
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    void LateUpdate () {
+        // Add the current target position to the list of positions
+        pointsInSpace.Enqueue( new PointInSpace() { Position = target.position, Time = Time.time } ) ;
+        
+        // Move the camera to the position of the target X seconds ago 
+        while( pointsInSpace.Count > 0 && pointsInSpace.Peek().Time <= Time.time - delay + Mathf.Epsilon ) {
+            Vector3 direction = target.rotation.y == 0 ? Vector3.right : Vector3.left;
+            Vector3 position = Vector3.Lerp( rb.position , pointsInSpace.Dequeue().Position + offset + Vector3.up*25 + direction*35, Time.deltaTime * speed);
+            rb.MovePosition(position);
+        }
     }
 }

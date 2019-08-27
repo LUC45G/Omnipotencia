@@ -19,6 +19,7 @@ public class LevelGenerator : MonoBehaviour {
         height = baseGO.GetComponent<Collider2D>().bounds.size.y;
         
         gameObject.GetComponent<BuildingController>().setHeight(height);
+        Screen.SetResolution(640, 480, false);
     }
 	// Use this for initialization
 	void Start () {
@@ -49,7 +50,7 @@ public class LevelGenerator : MonoBehaviour {
         //if(random % 3 == 0)
             Instantiate(chest, chestPosition, Quaternion.identity);
 
-        if( currentFloor+1 < floorCount) 
+        if( currentFloor < floorCount) 
             SpawnNextFloor();
         else 
             Instantiate( endingFloor, new Vector3( endingFloor.transform.position.x, endingFloor.transform.position.y + (height * floorCount) , endingFloor.transform.position.z ), Quaternion.identity );
