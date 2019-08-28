@@ -8,7 +8,7 @@ public class Attack : MonoBehaviour {
     public GameObject shoot;
 
     void Awake() {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Jugador>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Jugador>();
     }
 
 	// Use this for initialization

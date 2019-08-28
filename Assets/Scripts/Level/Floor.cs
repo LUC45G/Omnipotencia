@@ -10,7 +10,7 @@ public class Floor : MonoBehaviour {
 
     Vector3 chestPos = Vector3.zero, doorPos = Vector3.zero; 
     void Awake () {
-        // SpawnEnemies();
+        SpawnEnemies();
         lg = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<LevelGenerator>();
     }
 	// Use this for initialization
@@ -77,7 +77,7 @@ public class Floor : MonoBehaviour {
                 chestFound = true;
             }
 
-            if( !doorFound && child.CompareTag("Finish")) {
+            if( !doorFound && child.CompareTag("exitPoint")) {
                 doorPos = child.transform.position;
                 doorFound = true;
             }

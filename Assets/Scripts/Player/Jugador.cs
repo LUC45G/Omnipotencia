@@ -19,8 +19,9 @@ public class Jugador : MonoBehaviour {
     private float resistencia, danio;
 
     void Awake() {
-        vida_maxima = 100;
+        vida_maxima = 250;
         vida_actual = vida_maxima;
+        slider_vida.maxValue = vida_maxima;
         slider_vida.value = vida_maxima;
         resistencia = 20f;
         danio = 15.7f;
@@ -29,7 +30,6 @@ public class Jugador : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
         
 	}
 	

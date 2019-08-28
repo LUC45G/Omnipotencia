@@ -12,7 +12,7 @@ public class EnemyBomb : MonoBehaviour {
     private Jugador player;
 
     void Awake() {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Jugador>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Jugador>();
     }
 	// Use this for initialization
 	void Start () {
@@ -27,44 +27,12 @@ public class EnemyBomb : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D col) {
         
         if(col.gameObject.CompareTag("Player")) {
-            player.RecibirDamage( transform.parent.GetComponent<Enemy>().damage );
             Destroy(gameObject);
+            player.RecibirDamage( transform.parent.GetComponent<Enemy>().damage );
         }
         
         if(col.gameObject.CompareTag("Floor")) 
             Destroy(gameObject);
-           //ExpansiveWave();
-
-    }
-
-    void ExpansiveWave() {
-        Vector2 centro = this.transform.position;
-        Vector2 izq = this.transform.position;
-        Vector2 der = this.transform.position;
-
-        Destroy(gameObject);
-        GameObject go = Instantiate(secuela, centro, Quaternion.Euler(0f, 0f, 0f)); 
-        Destroy( go , 1f);
-        
-
-        int i = 0;
-
-        
-        while(i < 2) {
-            
-            if(Time.time > nextFire ) {
-                // Debug.Log("i: " + i);
-                nextFire = Time.time + delay;
-                izq.x -= 5*i;
-                der.x += 5*i;
-                GameObject aux = Instantiate(secuela, izq, Quaternion.Euler(0f, 0f, 0f));
-                Destroy( aux, 1f);
-                GameObject aux2 = Instantiate(secuela, der, Quaternion.Euler(0f, 0f, 0f));
-                Destroy(  aux2, 1f);
-            }
-            i++;
-
-        }
 
     }
 }

@@ -11,12 +11,9 @@ public class BuildingController : MonoBehaviour {
     float height;
 
     void Awake() {
-
-        puertas = GameObject.FindGameObjectsWithTag("Finish");
         jugador = GameObject.FindGameObjectWithTag("Player");
         camara = GameObject.FindGameObjectWithTag("MainCamera").transform;
         nivelActual = 0;
-
     }
 
 	// Use this for initialization

@@ -13,13 +13,13 @@ public class RangeWeaponController : MonoBehaviour {
     private Vector3 offset;
 
     void Awake() {
-        arma = GetComponentInParent<Arma>();
+        arma = this.GetComponent<Arma>();
         initialPosition = this.transform.position;
         offset = this.transform.position - this.GetComponentInParent<Transform>().position;
     }
 
 	// Use this for initialization
-	void Start () {
+	void Start () {        
 	}
 	
 	// Update is called once per frame
