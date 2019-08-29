@@ -7,14 +7,12 @@ using UnityEngine.UI;
 public class RangeWeaponController : MonoBehaviour {
 
     private float nextFire = 0.0f;
-    private Vector3 initialPosition;
     private Arma arma;
 
     private Vector3 offset;
 
     void Awake() {
         arma = this.GetComponent<Arma>();
-        initialPosition = this.transform.position;
         offset = this.transform.position - this.GetComponentInParent<Transform>().position;
     }
 

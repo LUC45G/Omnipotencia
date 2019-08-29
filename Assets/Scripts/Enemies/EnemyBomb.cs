@@ -6,9 +6,6 @@ public class EnemyBomb : MonoBehaviour {
 
     public GameObject secuela;
 
-    private float delay = 1f;
-    private float nextFire = 0.0f;
-
     private Jugador player;
 
     void Awake() {

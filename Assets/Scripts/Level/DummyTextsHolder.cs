@@ -5,11 +5,9 @@ using UnityEngine;
 public class DummyTextsHolder : MonoBehaviour {
 
     public GameObject[] texts;
-    private Transform canvas;
 
 	// Use this for initialization
 	void Start () {
-		canvas = GameObject.FindGameObjectWithTag("GameController").transform;
 	}
 	
 	// Update is called once per frame

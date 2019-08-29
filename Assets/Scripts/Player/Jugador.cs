@@ -95,6 +95,7 @@ public class Jugador : MonoBehaviour {
 
     public void AumentarVida(int plus) {
         vida_maxima += plus;
+        slider_vida.maxValue = vida_maxima;
         vida_actual += plus;
     }
 
