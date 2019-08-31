@@ -44,8 +44,8 @@ public class CompleteCameraController : MonoBehaviour {
         
         // Move the camera to the position of the target X seconds ago 
         while( pointsInSpace.Count > 0 && pointsInSpace.Peek().Time <= Time.time - delay + Mathf.Epsilon ) {
-            // Vector3 direction = target.rotation.y == 0 ? Vector3.right : Vector3.left;
-            Vector3 position = Vector3.Lerp( rb.position , pointsInSpace.Dequeue().Position + offset + Vector3.up*15 + Vector3.right*50, Time.deltaTime * speed);
+            int direction = target.rotation.y == 0 ? 50 : 35;
+            Vector3 position = Vector3.Lerp( rb.position , pointsInSpace.Dequeue().Position + offset + Vector3.up*15 + Vector3.right * direction , Time.deltaTime * speed);
             rb.MovePosition(position);
         }
     }

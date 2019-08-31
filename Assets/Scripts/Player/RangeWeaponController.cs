@@ -4,29 +4,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RangeWeaponController : MonoBehaviour {
+public class RangeWeaponController : GenericWeaponController {
 
     private float nextFire = 0.0f;
-    private Arma arma;
-
-    private Vector3 offset;
 
     void Awake() {
-        arma = this.GetComponent<Arma>();
-        offset = this.transform.position - this.GetComponentInParent<Transform>().position;
     }
 
 	// Use this for initialization
-	void Start () {        
+	public override void Start () {
+        base.Start();
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	    Translate();
-    	Attack();
+	public override void Update () {
+        base.Update();
+    	
 	}
 
-    void Attack() {
+    protected override void Attack() {
         
         if ( Input.GetKey(KeyCode.K) && Time.time > nextFire ) {
 
@@ -52,29 +48,13 @@ public class RangeWeaponController : MonoBehaviour {
             Quaternion objectRotation = Quaternion.Euler( ( target.x*(target.x - 1) * 90) , 0, (aux_Y * ( (1 - target.x) * -90 )) + ( (1 - aux_Y) * ( target.y * 90 ) ) );
 
             foreach ( Attack shot in arma.getAttacks() ) {
-                GameObject instantiatedObj = (GameObject) Instantiate(shot.getShoot(), transform.position, objectRotation);
+                GameObject instantiatedObj = (GameObject) Instantiate(shot.getShoot(), transform.position - new Vector3(0, 0, 5), objectRotation);
                 
                 Rigidbody2D attack_rb = instantiatedObj.GetComponent<Rigidbody2D>();
-                attack_rb.AddForce(target * 100, ForceMode2D.Impulse);
+                attack_rb.AddForce(target * 200, ForceMode2D.Impulse);
             }
 
-            }
         }
+    }
     
-
-    void Translate() {
-
-        if ( Input.GetAxis("Vertical") > 0 ) 
-            this.transform.position = this.transform.parent.transform.position + Vector3.up;
-        else if ( Input.GetAxis("Vertical") < 0 )
-            this.transform.position = this.transform.parent.transform.position - Vector3.up;
-        else
-            this.transform.position += offset;
-        
-
-    }
-
-    public Arma getWeapon() {
-        return arma;
-    }
 }

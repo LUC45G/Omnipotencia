@@ -23,7 +23,7 @@ public class Dash : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		
         Vector2 looking = ( player.transform.rotation.y == 0 ) ? Vector2.right : Vector2.left;
         RaycastHit2D ray = Physics2D.Raycast(transform.position, looking * 17, 17f);
@@ -41,20 +41,23 @@ public class Dash : MonoBehaviour {
 	}
 
     void DashControl() {
-       if(Input.GetKeyDown(KeyCode.L)) {
-            if( !isDashing ) {
-                isDashing = true;
-                float movPos = player.transform.position.x + 17;
-                float movNeg = player.transform.position.x - 17;
-                float control = ( player.transform.rotation.x == 0f ) ? movPos : movNeg;
-
-                Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
-
-                rb.MovePosition	( new Vector2(control, player.transform.position.y) ) ;
-            }
-            
-            
-            isDashing = false;
+        if(Input.GetKeyDown(KeyCode.L) && !isDashing) {
+            isDashing = true;
+            StartCoroutine("StopDashing");    
         }
-    } 
+    }
+
+    IEnumerator StopDashing() {
+        float movPos = player.transform.position.x + 17;
+        float movNeg = player.transform.position.x - 17;
+        float control = ( player.transform.rotation.x == 0f ) ? movPos : movNeg;
+
+        Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
+
+        rb.MovePosition	( new Vector2(control, player.transform.position.y) );
+
+        yield return new WaitForSeconds(3f);
+
+        isDashing = false;
+    }
 }
