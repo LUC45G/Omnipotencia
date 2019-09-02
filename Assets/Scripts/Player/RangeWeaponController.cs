@@ -24,7 +24,7 @@ public class RangeWeaponController : GenericWeaponController {
 
     protected override void Attack() {
         
-        if ( Input.GetKey(KeyCode.K) && Time.time > nextFire ) {
+        if ( Input.GetKey(KeyCode.J) && Time.time > nextFire ) {
 
             // controla la velocidad de ataque. 
             nextFire = Time.time + arma.velocidad_de_ataque;

@@ -40,7 +40,7 @@ public class Jugador : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col) {
 
-        if(col.CompareTag("Object")) {
+        if(col.CompareTag("Item")) {
             String nombre_item = col.name.Remove(col.name.Length - 7);
             System.Type nombre = System.Type.GetType(nombre_item + ",Assembly-CSharp");
 

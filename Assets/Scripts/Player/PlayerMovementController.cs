@@ -36,13 +36,13 @@ public class PlayerMovementController : MonoBehaviour {
         
         Physics2D.IgnoreLayerCollision(8, 9);
         
-	}
-
-    void FixedUpdate() {
         Move();
         Jump();
         if ( estaEnEscalera )
             Escalar();
+	}
+
+    void FixedUpdate() {
     }
 
     void Move() {
@@ -67,12 +67,20 @@ public class PlayerMovementController : MonoBehaviour {
 
     void Jump() {
         // Si se aprieta espacio y está en el suelo, salta
-        if(Input.GetKeyDown(KeyCode.J)) {
+        if(Input.GetKeyDown(KeyCode.K)) {
             if( !estaSaltando && !estaEnEscalera ) {
                 estaSaltando = true;
                 rb.AddForce(Vector2.up * fuerza_salto, ForceMode2D.Impulse);
             }
         }
+    }
+
+    public bool CanDoubleJump() {
+        return estaSaltando && !estaEnEscalera;
+    }
+    
+    public float GetJumpForce(){
+        return fuerza_salto;
     }
 
     void Escalar() {
