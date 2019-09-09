@@ -9,8 +9,10 @@ public class Jugador : MonoBehaviour {
 
     public Slider slider_vida;
     public RangeWeaponController weaponController;
+    public PassiveItems passives;
     private BuildingController bc;
 
+    private List<PassiveItems.Item> items;
 
 
 
@@ -24,8 +26,9 @@ public class Jugador : MonoBehaviour {
         slider_vida.maxValue = vida_maxima;
         slider_vida.value = vida_maxima;
         resistencia = 20f;
-        danio = 15.7f;
+        danio = 5.7f;
         bc = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<BuildingController>();
+        items = new List<PassiveItems.Item>();
     }
 
 	// Use this for initialization
@@ -48,15 +51,37 @@ public class Jugador : MonoBehaviour {
                 gameObject.AddComponent(nombre);
 
             Destroy(col.gameObject);
-        }
-
-        if (col.CompareTag("exitPoint")) {
+        } else if (col.CompareTag("exitPoint")) {
             bc.SubirDeNivel();
-        }
-
-        if ( col.CompareTag("EndBuilding") )
+        } else if ( col.CompareTag("EndBuilding") ) {
             SceneManager.LoadScene(1);
+        } else if ( col.CompareTag("PassiveItem") ) {
+            PassiveItems.Item temp = passives.getRandomItem();
+            
 
+            switch(temp.toBuff) {
+                case 0:
+                    danio *= temp.multiplier;
+                    Debug.Log("new dmg: " + danio);
+                    break;
+                case 1:
+                    resistencia *= temp.multiplier;
+                    Debug.Log("new resistance: " + resistencia);
+                    break;
+                case 2:
+                    vida_maxima = (int) (vida_maxima * temp.multiplier);
+                    vida_actual = (int) (vida_actual * temp.multiplier);
+                    Debug.Log("new max hp: " + vida_maxima);
+                    Debug.Log("new current hp: " + vida_actual);
+                    break;
+                case 3:
+                    weaponController.getWeapon().AumentarVelocidadDeAtaque(temp.multiplier);
+                    break;
+            }
+
+            items.Add(temp);
+            Destroy(col.gameObject);
+        }
     }
 
     void OnTriggerStay2D ( Collider2D col ) {

@@ -21,7 +21,10 @@ public class Arma : MonoBehaviour {
 
     public void AumentarVelocidadDeAtaque(float plus) {
         // posiblemente esto deba ser un multiplicador pero bueno
-        velocidad_de_ataque += plus;
+        Debug.Log("prev AS: " + velocidad_de_ataque);
+        velocidad_de_ataque *= System.Math.Abs(plus-2);
+        Debug.Log("new AS: " + velocidad_de_ataque);
+
     }
 
     public List<Attack> getAttacks() {
